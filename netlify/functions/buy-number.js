@@ -1,7 +1,6 @@
 exports.handler = async (event) => {
   try {
     const { service, country } = JSON.parse(event.body);
-
     const response = await fetch('https://oraclelense.com/api/v1/buy', {
       method: 'POST',
       headers: {
@@ -14,9 +13,7 @@ exports.handler = async (event) => {
         quantity: 1
       })
     });
-
     const data = await response.json();
-
     return {
       statusCode: 200,
       body: JSON.stringify(data)
