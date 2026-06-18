@@ -2,24 +2,22 @@ exports.handler = async (event) => {
   try {
     const { service, country } = JSON.parse(event.body);
     
-    const response = await fetch('https://oraclelense.com/api/v1/buy', {
-      method: 'POST',
+    const response = await fetch(`https://5sim.net/v1/user/buy/activation/${country}/${service}`, {
+      method: 'GET',
       headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        api_key: process.env.ORACLE_API_KEY,
-        product_id: service,
-        server: country,
-        quantity: 1
-      })
+        'api-key': process.env.FIVESIM_API_KEY
+      }
     });
     
     const data = await response.json();
     
     return {
       statusCode: 200,
-      body: JSON.stringify(data)
+      body: JSON.stringify({ 
+        number: data.phone || data.number || 'No number',
+        orderId: data.id,
+        full: data
+      })
     };
   } catch (err) {
     return {
