@@ -8,14 +8,18 @@ exports.handler = async (event) => {
         'Authorization': `Bearer ${process.env.ORACLE_API_KEY}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ service, country })
+      body: JSON.stringify({
+        product_id: service,
+        server: country,
+        quantity: 1
+      })
     });
     
     const data = await response.json();
     
     return {
       statusCode: 200,
-      body: JSON.stringify({ number: data.number || data.phone || 'No number', full: data })
+      body: JSON.stringify(data)
     };
   } catch (err) {
     return {
