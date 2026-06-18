@@ -4,14 +4,29 @@
 <body>
 <button onclick="buy()">Buy Number</button>
 <p id="result"></p>
+
 <script>
 async function buy() {
-  const res = await fetch('/.netlify/functions/buy-number', {
-    method: 'POST',
-    body: JSON.stringify({service:'whatsapp', country:'US'})
-  });
-  const data = await res.json();
-  document.getElementById('result').innerText = data.number || 'Error';
+  const result = document.getElementById('result');
+  result.innerText = 'Loading...';
+
+  try {
+    const res = await fetch('/.netlify/functions/buy-number', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        service: 'whatsapp',
+        country: 'US'
+      })
+    });
+
+    const data = await res.json();
+    result.innerText = data.number || 'Error: No number';
+  } catch (err) {
+    result.innerText = 'Error: ' + err.message;
+  }
 }
 </script>
 </body>
