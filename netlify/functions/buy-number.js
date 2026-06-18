@@ -5,7 +5,7 @@ exports.handler = async (event) => {
     const response = await fetch(`https://5sim.net/v1/user/buy/activation/${country}/${service}`, {
       method: 'GET',
       headers: {
-        'api-key': process.env.FIVESIM_API_KEY
+        'Authorization': `Bearer ${process.env.FIVESIM_API_KEY}`
       }
     });
 
