@@ -17,9 +17,13 @@ exports.handler = async (event) => {
     
     const data = await response.json();
     
+    // Send back the full response so we can debug
     return {
       statusCode: 200,
-      body: JSON.stringify(data)
+      body: JSON.stringify({
+        received: data,
+        full: data
+      })
     };
   } catch (err) {
     return {
