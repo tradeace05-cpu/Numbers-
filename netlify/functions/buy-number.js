@@ -2,18 +2,17 @@ exports.handler = async (event) => {
   try {
     const { service, country } = JSON.parse(event.body);
     
-    const formData = new URLSearchParams();
-    formData.append('api_key', process.env.ORACLE_API_KEY);
-    formData.append('product_id', service);
-    formData.append('server', country);
-    formData.append('quantity', '1');
-    
     const response = await fetch('https://oraclelense.com/api/v1/buy', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/json'
       },
-      body: formData
+      body: JSON.stringify({
+        api_key: process.env.ORACLE_API_KEY,
+        product_id: service,
+        server: country,
+        quantity: 1
+      })
     });
     
     const data = await response.json();
