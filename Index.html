@@ -23,7 +23,7 @@ async function buy() {
     });
 
     const data = await res.json();
-    result.innerText = data.number || 'Error: No number';
+    result.innerText = JSON.stringify(data); // Show everything
   } catch (err) {
     result.innerText = 'Error: ' + err.message;
   }
