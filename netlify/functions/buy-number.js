@@ -2,10 +2,12 @@ exports.handler = async (event) => {
   try {
     const { service, country } = JSON.parse(event.body);
 
-    const response = await fetch(`https://5sim.net/v1/user/buy/activation/${country}/${service}`, {
+    // 5sim expects: country in lowercase, service in lowercase
+    const response = await fetch(`https://5sim.net/v1/user/buy/activation/${country.toLowerCase()}/${service.toLowerCase()}`, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${process.env.FIVESIM_API_KEY}`
+        'Authorization': `Bearer ${process.env.FIVESIM_API_KEY}`,
+        'Accept': 'application/json'
       }
     });
 
